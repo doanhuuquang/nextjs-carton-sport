@@ -3,19 +3,19 @@
 import { PostCard } from "@/components/shared/post-card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Category } from "@/types/category";
+import { PostCategory } from "@/types/postCategory";
 import { Post } from "@/types/post";
 import React, { useEffect, useState } from "react";
 
 export default function PostsPage() {
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<PostCategory[]>([]);
   const [posts, setPosts] = useState<Post[]>([]);
   const [currentCategory, setCurrentCategory] = useState<string>("Công nghệ");
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     setLoading(true);
-    fetch("/api/categories")
+    fetch("/api/post-categories")
       .then((res) => res.json())
       .then((data) => setCategories(data))
       .finally(() => setLoading(false));
@@ -74,9 +74,9 @@ export default function PostsPage() {
         ) : (
           posts.map(
             (post) =>
-              post.category.some((cat) => cat.name === currentCategory) && (
-                <PostCard key={post.slug} post={post} />
-              )
+              post.postCategories.some(
+                (cat) => cat.name === currentCategory
+              ) && <PostCard key={post.slug} post={post} />
           )
         )}
       </div>

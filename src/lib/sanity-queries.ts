@@ -12,10 +12,24 @@ const POST_FIELDS = groq`
     name,
     avatar
   },
-  category[]->{
+  postCategories[]->{
     name,
     description
   }
+`;
+
+const PRODUCT_FIELDS = groq`
+  images,
+  name,
+  description,
+  price,
+  version,
+  colors,
+  productSize->{
+    sizeGuide,
+    sizes
+  },
+  slug
 `;
 
 export const POSTS_QUERY = groq`
@@ -27,16 +41,6 @@ export const POSTS_QUERY = groq`
   }
 `;
 
-export const POSTS_BY_CATEGORY_QUERY = groq`
-  *[
-    _type == "post"
-    && defined(slug.current)
-    && $categoryId in category[]._ref
-  ]|order(publishedAt desc){
-    ${POST_FIELDS}
-  }
-`;
-
 export const POST_QUERY = groq`
   *[
     _type == "post"
@@ -44,6 +48,16 @@ export const POST_QUERY = groq`
   ][0]{
     ${POST_FIELDS},
     content
+  }
+`;
+
+export const POSTS_BY_CATEGORY_QUERY = groq`
+  *[
+    _type == "post"
+    && defined(slug.current)
+    && $categoryId in postCategories[]._ref
+  ]|order(publishedAt desc){
+    ${POST_FIELDS}
   }
 `;
 
@@ -63,9 +77,9 @@ export const RECOMMEND_POST_QUERY = groq`
       }
     }`;
 
-export const CAROUSEL_QUERY = groq` 
+export const POST_CAROUSEL_QUERY = groq` 
     *[
-    _type == "carousel"]{
+    _type == "postCarousel"]{
         posts[]->{
             ${POST_FIELDS}
         }
@@ -80,15 +94,15 @@ export const SEARCH_QUERY = groq`
     || excerpt match "*" + $searchString + "*"
     || content match "*" + $searchString + "*"
     || author->name match "*" + $searchString + "*"
-    || category[]->name match "*" + $searchString + "*")
+    || postCategories[]->name match "*" + $searchString + "*")
   ]|order(publishedAt desc) {
       ${POST_FIELDS}
     }
 `;
 
-export const CATEGORY_QUERY = groq`
+export const POST_CATEGORY_QUERY = groq`
   *[
-    _type == "category"
+    _type == "postCategory"
   ]|order(name desc){
     name,
     description
@@ -131,5 +145,22 @@ export const SOCIAL_MEDIA_QUERY = groq`
     platform,
     url,
     icon
+  }
+`;
+
+export const PRODUCTS_QUERY = groq`
+  *[
+    _type == "product"
+  ]|order(_createdAt desc){
+    ${PRODUCT_FIELDS}
+  }
+`;
+
+export const PRODUCT_QUERY = groq`
+  *[
+    _type == "product"
+    && slug == $slug
+  ][0]{
+    ${PRODUCT_FIELDS}
   }
 `;

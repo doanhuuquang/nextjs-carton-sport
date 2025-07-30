@@ -5,20 +5,23 @@ import { Post } from "@/types/post";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import {
   BLOG_OWNER_INFO_QUERY,
-  CAROUSEL_QUERY,
-  CATEGORY_QUERY,
+  POST_CAROUSEL_QUERY,
+  POST_CATEGORY_QUERY,
   COMPACT_POST_QUERY,
   POSTS_QUERY,
+  POSTS_BY_CATEGORY_QUERY,
   POST_QUERY,
+  PRODUCTS_QUERY,
   RECOMMEND_POST_QUERY,
   SEARCH_QUERY,
   SHOP_INFO_QUERY,
   SOCIAL_MEDIA_QUERY,
 } from "./sanity-queries";
-import { Category } from "@/types/category";
+import { PostCategory } from "@/types/postCategory";
 import { SocialMedia } from "@/types/social-media";
 import { BlogOwnerInfo } from "@/types/blog-owner-info";
 import { ShopInfo } from "@/types/shop-info";
+import { Product } from "@/types/product";
 
 const { projectId, dataset } = client.config();
 const urlFor = (source: SanityImageSource) =>
@@ -37,7 +40,7 @@ export function transformPost(doc: SanityDocument): Post {
     },
     publishedAt: doc.publishedAt || "",
     readTime: doc.readTime || 0,
-    category: doc.category || [],
+    postCategories: doc.postCategories || [],
     image: doc.image ? urlFor(doc.image)?.url() || "" : "",
     slug: doc.slug?.current || doc.slug || "",
   };
@@ -51,7 +54,7 @@ export function transformSocialMedia(doc: SanityDocument): SocialMedia {
   };
 }
 
-export function transformCategory(doc: SanityDocument): Category {
+export function transformPostCategory(doc: SanityDocument): PostCategory {
   return {
     name: doc.name || "",
     description: doc.description || "",
@@ -83,6 +86,31 @@ export function transformShopInfo(doc: SanityDocument): ShopInfo {
   };
 }
 
+export function transformProduct(doc: SanityDocument): Product {
+  return {
+    images: doc.images
+      ? doc.images.map((image: string) => {
+          const imageUrl = image ? urlFor(image) : null;
+          return imageUrl ? imageUrl.url() : "";
+        })
+      : [],
+    name: doc.name || "",
+    description: doc.description || "",
+    price: doc.price || 0,
+    version: doc.version || "",
+    colors: doc.colors || [],
+    productSize: {
+      sizeGuide:
+        doc.productSize?.sizeGuide.map((image: string) => {
+          const imageUrl = image ? urlFor(image) : null;
+          return imageUrl ? imageUrl.url() : "";
+        }) || [],
+      sizes: doc.productSize?.sizes || [],
+    },
+    slug: doc.slug?.current || "",
+  };
+}
+
 export async function getPosts(): Promise<Post[]> {
   const sanityPosts: SanityDocument[] = await client.fetch(
     POSTS_QUERY,
@@ -103,34 +131,6 @@ export async function getPost(slug: string): Promise<Post | null> {
     }
   );
   return transformPost(post);
-}
-
-export async function getPostsByCategory(categoryId: string): Promise<Post[]> {
-  const sanityPosts: SanityDocument[] = await client.fetch(
-    `*[
-      _type == "post"
-      && defined(slug.current)
-      && $categoryId in category[]._ref
-    ]|order(publishedAt desc){
-      _id,
-      title,
-      excerpt,
-      slug,
-      publishedAt,
-      readTime,
-      image,
-      author->{
-        name
-      },
-      category[]->{
-        name,
-        description
-      }
-    }`,
-    { categoryId },
-    { next: { revalidate: 30 } }
-  );
-  return sanityPosts.map(transformPost);
 }
 
 export async function getCompactPosts(): Promise<Post[]> {
@@ -159,7 +159,7 @@ export async function getRecommendPosts(): Promise<Post[]> {
 
 export async function getCarouselPosts(): Promise<Post[]> {
   const carouselPosts: SanityDocument[] = await client.fetch(
-    CAROUSEL_QUERY,
+    POST_CAROUSEL_QUERY,
     {},
     {
       next: { revalidate: 30 },
@@ -181,16 +181,27 @@ export async function searchPosts(searchString: string): Promise<Post[]> {
   return searchedPosts.map(transformPost);
 }
 
-export async function getCategories(): Promise<Category[]> {
-  const sanityCategories: SanityDocument[] = await client.fetch(
-    CATEGORY_QUERY,
+export async function getPostCategories(): Promise<PostCategory[]> {
+  const sanityPostCategories: SanityDocument[] = await client.fetch(
+    POST_CATEGORY_QUERY,
     {},
     {
       next: { revalidate: 30 },
     }
   );
 
-  return sanityCategories.map(transformCategory);
+  return sanityPostCategories.map(transformPostCategory);
+}
+
+export async function getPostsByCategory(categoryId: string): Promise<Post[]> {
+  const sanityPosts: SanityDocument[] = await client.fetch(
+    POSTS_BY_CATEGORY_QUERY,
+    { categoryId },
+    {
+      next: { revalidate: 30 },
+    }
+  );
+  return sanityPosts.map(transformPost);
 }
 
 export async function getBlogOwnerInfo(): Promise<BlogOwnerInfo> {
@@ -224,4 +235,15 @@ export async function getSocialMedias(): Promise<SocialMedia[]> {
     }
   );
   return sanitySocialMedias.map(transformSocialMedia);
+}
+
+export async function getProducts(): Promise<Product[]> {
+  const sanityProducts: SanityDocument[] = await client.fetch(
+    PRODUCTS_QUERY,
+    {},
+    {
+      next: { revalidate: 30 },
+    }
+  );
+  return sanityProducts.map(transformProduct);
 }

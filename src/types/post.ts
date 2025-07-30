@@ -1,5 +1,5 @@
 import { Author } from "@/types/author";
-import { Category } from "@/types/category";
+import { PostCategory } from "@/types/postCategory";
 
 export interface Post {
   title: string;
@@ -8,7 +8,7 @@ export interface Post {
   author: Author;
   publishedAt: string;
   readTime: number;
-  category: Category[];
+  postCategories: PostCategory[];
   image: string;
   slug: string;
 }

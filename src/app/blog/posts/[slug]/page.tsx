@@ -24,7 +24,7 @@ export default async function PostPage({
           <div className="flex items-center">
             <div className=" space-y-5">
               <div className="flex flex-wrap items-center gap-3 text-xs uppercase">
-                {post.category.map((cat) => (
+                {post.postCategories.map((cat) => (
                   <p key={cat.name} className="px-4 py-1 bg-muted rounded-full">
                     {cat.name}
                   </p>

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Clock4, Eye, MessageSquare } from "lucide-react";
+import { Clock4 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Post } from "@/types/post";
 
@@ -40,7 +40,7 @@ function PostCard({
           className="object-cover"
         />
         <div className="absolute top-2 left-2 rounded-full bg-black/20 backdrop-blur-lg py-1 px-2 text-white text-[8px]">
-          {post.category.map((cat) => (
+          {post.postCategories.map((cat) => (
             <span key={cat.name} className="mr-1">
               {cat.name}
             </span>
@@ -139,7 +139,7 @@ function PostCardFeatured({
               : " text-[8px] py-1 px-2 top-2 left-2"
           )}
         >
-          {post.category.map((cat) => (
+          {post.postCategories.map((cat) => (
             <span key={cat.name} className="mr-1">
               {cat.name}
             </span>

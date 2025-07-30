@@ -1,4 +1,4 @@
-export interface Category {
+export interface PostCategory {
   name: string;
   description: string;
 }
