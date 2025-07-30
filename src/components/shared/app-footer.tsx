@@ -18,7 +18,7 @@ export default async function AppFooter() {
   const categories: PostCategory[] = await getPostCategories();
 
   return (
-    <div className="w-full bg-background border-t">
+    <div className="w-ful bg-background border-t">
       <div className="w-full max-w-7xl mx-auto grid lg:grid-cols-3 grid-cols-1">
         <div className="space-y-5 px-3 py-5">
           <AppLogo className="w-40" />

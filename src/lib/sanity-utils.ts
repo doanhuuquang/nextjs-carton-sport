@@ -16,12 +16,14 @@ import {
   SEARCH_QUERY,
   SHOP_INFO_QUERY,
   SOCIAL_MEDIA_QUERY,
+  PRODUCT_CATEGORY_QUERY,
 } from "./sanity-queries";
 import { PostCategory } from "@/types/postCategory";
 import { SocialMedia } from "@/types/social-media";
 import { BlogOwnerInfo } from "@/types/blog-owner-info";
 import { ShopInfo } from "@/types/shop-info";
 import { Product } from "@/types/product";
+import { ProductCategory } from "@/types/productCategory";
 
 const { projectId, dataset } = client.config();
 const urlFor = (source: SanityImageSource) =>
@@ -86,6 +88,13 @@ export function transformShopInfo(doc: SanityDocument): ShopInfo {
   };
 }
 
+export function transformProductCategory(doc: SanityDocument): ProductCategory {
+  return {
+    name: doc.name || "",
+    description: doc.description || "",
+  };
+}
+
 export function transformProduct(doc: SanityDocument): Product {
   return {
     images: doc.images
@@ -94,20 +103,21 @@ export function transformProduct(doc: SanityDocument): Product {
           return imageUrl ? imageUrl.url() : "";
         })
       : [],
+    productCategory: doc.productCategory || { name: "", description: "" },
     name: doc.name || "",
     description: doc.description || "",
     price: doc.price || 0,
-    version: doc.version || "",
+    version: doc.version || [],
     colors: doc.colors || [],
     productSize: {
       sizeGuide:
-        doc.productSize?.sizeGuide.map((image: string) => {
+        doc.productSize?.sizeGuide?.map((image: string) => {
           const imageUrl = image ? urlFor(image) : null;
           return imageUrl ? imageUrl.url() : "";
         }) || [],
       sizes: doc.productSize?.sizes || [],
     },
-    slug: doc.slug?.current || "",
+    slug: doc.slug?.current || doc.slug || "",
   };
 }
 
@@ -235,6 +245,17 @@ export async function getSocialMedias(): Promise<SocialMedia[]> {
     }
   );
   return sanitySocialMedias.map(transformSocialMedia);
+}
+
+export async function getProductCategories(): Promise<ProductCategory[]> {
+  const sanityProductCategories: SanityDocument[] = await client.fetch(
+    PRODUCT_CATEGORY_QUERY,
+    {},
+    {
+      next: { revalidate: 30 },
+    }
+  );
+  return sanityProductCategories.map(transformProductCategory);
 }
 
 export async function getProducts(): Promise<Product[]> {

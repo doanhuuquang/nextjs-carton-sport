@@ -20,6 +20,10 @@ const POST_FIELDS = groq`
 
 const PRODUCT_FIELDS = groq`
   images,
+  productCategory->{
+    name,
+    description
+  },
   name,
   description,
   price,
@@ -145,6 +149,15 @@ export const SOCIAL_MEDIA_QUERY = groq`
     platform,
     url,
     icon
+  }
+`;
+
+export const PRODUCT_CATEGORY_QUERY = groq`
+  *[
+    _type == "productCategory"
+  ]|order(name desc){
+    name,
+    description
   }
 `;
 

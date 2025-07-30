@@ -15,13 +15,12 @@ import Link from "next/link";
 
 export default async function BlogPage() {
   const posts = await getPosts();
-  console.log(posts);
   const carouselPosts = await getCarouselPosts();
   const compactPosts = await getCompactPosts();
   const recommendPosts = await getRecommendPosts();
 
   return (
-    <main className="max-w-7xl px-3 py-10 space-y-15 mx-auto">
+    <main className="max-w-7xl px-3 py-5 space-y-15 mx-auto">
       <div className="space-y-5">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
           {compactPosts.map((post) => (

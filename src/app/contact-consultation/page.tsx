@@ -7,7 +7,7 @@ export default async function ContactConsultationPage() {
 
   return (
     <main className="w-full h-full my-5">
-      <div className="w-full bg-background rounded-md max-w-7xl h-full m-auto grid lg:grid-cols-7 grid-cols-1 gap-10 overflow-hidden p-3">
+      <div className="w-full bg-background rounded-md max-w-7xl h-full m-auto grid lg:grid-cols-7 grid-cols-1 gap-10 overflow-hidden px-3">
         <div className="col-span-3 w-full h-full flex flex-col justify-between gap-10">
           <div className="space-y-3">
             <p className="text-3xl font-black">Thông tin liên hệ</p>

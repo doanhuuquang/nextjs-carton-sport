@@ -10,14 +10,20 @@ import React, { useEffect, useState } from "react";
 export default function PostsPage() {
   const [categories, setCategories] = useState<PostCategory[]>([]);
   const [posts, setPosts] = useState<Post[]>([]);
-  const [currentCategory, setCurrentCategory] = useState<string>("Công nghệ");
+  const [currentCategory, setCurrentCategory] = useState<string>("Tất cả");
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     setLoading(true);
     fetch("/api/post-categories")
       .then((res) => res.json())
-      .then((data) => setCategories(data))
+      .then((data) => {
+        const updatedCategories = [
+          { name: "Tất cả", description: "" },
+          ...data,
+        ];
+        setCategories(updatedCategories);
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -30,33 +36,29 @@ export default function PostsPage() {
   }, []);
 
   return (
-    <main className="space-y-10 py-10">
-      <div className="relative w-full">
-        <div className="absolute top-0 right-0 h-full w-3 bg-gradient-to-l from-background to-transparent"></div>
-        <div className="absolute top-0 left-0 h-full w-3 bg-gradient-to-r from-background to-transparent"></div>
-        <div className="flex gap-3 overflow-auto max-w-7xl  mx-auto px-3 hide-scrollbar">
-          {loading ? (
-            <>
-              <Skeleton className="h-[50px] w-full rounded-sm" />
-              <Skeleton className="h-[50px] w-full rounded-sm" />
-              <Skeleton className="h-[50px] w-full rounded-sm" />
-              <Skeleton className="h-[50px] w-full rounded-sm" />
-              <Skeleton className="h-[50px] w-full rounded-sm" />
-            </>
-          ) : (
-            categories.map((category) => (
-              <Button
-                variant={
-                  currentCategory === category.name ? "default" : "outline"
-                }
-                key={category.name}
-                onClick={() => setCurrentCategory(category.name)}
-              >
-                {category.name}
-              </Button>
-            ))
-          )}
-        </div>
+    <main className="space-y-5 py-5 w-full h-full">
+      <div className="flex gap-3 overflow-auto max-w-7xl h-full mx-auto px-3 hide-scrollbar">
+        {loading ? (
+          <>
+            <Skeleton className="h-[50px] w-full rounded-sm" />
+            <Skeleton className="h-[50px] w-full rounded-sm" />
+            <Skeleton className="h-[50px] w-full rounded-sm" />
+            <Skeleton className="h-[50px] w-full rounded-sm" />
+            <Skeleton className="h-[50px] w-full rounded-sm" />
+          </>
+        ) : (
+          categories.map((category) => (
+            <Button
+              variant={
+                currentCategory === category.name ? "default" : "outline"
+              }
+              key={category.name}
+              onClick={() => setCurrentCategory(category.name)}
+            >
+              {category.name}
+            </Button>
+          ))
+        )}
       </div>
 
       <div className="w-full px-3 max-w-7xl mx-auto grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 grid-flow-row gap-5">
@@ -72,11 +74,14 @@ export default function PostsPage() {
             <PostCardSkeleton />
           </>
         ) : (
-          posts.map(
-            (post) =>
+          posts.map((post) =>
+            currentCategory === "Tất cả" ? (
+              <PostCard key={post.slug} post={post} />
+            ) : (
               post.postCategories.some(
-                (cat) => cat.name === currentCategory
+                (category) => category.name === currentCategory
               ) && <PostCard key={post.slug} post={post} />
+            )
           )
         )}
       </div>
