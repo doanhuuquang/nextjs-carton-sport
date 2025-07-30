@@ -20,7 +20,7 @@ function PostCard({
     <Link
       href={`/blog/posts/${post.slug}`}
       className={cn(
-        " group overflow-hidden grid gap-3 h-full w-full rounded-sm hover:bg-accent transition-all duration-300",
+        " group overflow-hidden border grid gap-3 h-full w-full rounded-sm hover:bg-accent transition-all duration-300",
         className,
         direction === "horizontal" ? "grid-cols-2 grid-rows-1" : ""
       )}
@@ -77,7 +77,7 @@ function PostCardCompact({ className, post }: PostCardProps) {
     <Link
       href={`/blog/posts/${post.slug}`}
       className={cn(
-        "group overflow-hidden grid grid-cols-3 h-full items-center gap-3 w-full rounded-sm hover:bg-accent transition-all duration-300 ",
+        "group overflow-hidden border grid grid-cols-3 h-full items-center gap-3 w-full rounded-sm hover:bg-accent transition-all duration-300 ",
         className
       )}
     >
@@ -110,7 +110,7 @@ function PostCardFeatured({
     <Link
       href={`/blog/posts/${post.slug}`}
       className={cn(
-        "group overflow-hidden grid gap-3 h-full min-h-[250px] w-full rounded-sm hover:bg-accent transition-all duration-300",
+        "group overflow-hidden border grid gap-3 h-full min-h-[250px] w-full rounded-sm hover:bg-accent transition-all duration-300",
         className,
         isCarouselItem ? "relative" : "grid-rows-2"
       )}
@@ -179,16 +179,6 @@ function PostCardFeatured({
               {post.author.name}
             </p>
           </div>
-          <div className="flex items-center gap-2 text-xs uppercase">
-            <p className="flex items-center gap-1">
-              <Eye className="size-3" /> 200 Lượt đọc
-            </p>
-            <span className="w-[1px] h-[11px] bg-muted-foreground rotate-30"></span>
-            <p className="flex items-center gap-1">
-              <MessageSquare className="size-3" />
-              200 Bình Luận
-            </p>
-          </div>
         </div>
 
         <p className="line-clamp-2 lg:text-2xl md:text-xl font-bold min-h-12">
@@ -220,7 +210,7 @@ function PostCardMinimal({ post, className }: PostCardProps) {
     <Link
       href={`/blog/posts/${post.slug}`}
       className={cn(
-        "group overflow-hidden grid gap-3 h-full w-full rounded-sm hover:bg-accent transition-all duration-300",
+        "group overflow-hidden border grid gap-3 h-full w-full rounded-sm hover:bg-accent transition-all duration-300",
         className
       )}
     >

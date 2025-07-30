@@ -4,7 +4,6 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const FROM_EMAIL = "onboarding@resend.dev";
-const TO_EMAIL = "doanhuuquang.dev@gmail.com";
 
 type Payload = {
   firstName: string;
@@ -13,6 +12,7 @@ type Payload = {
   phone: string;
   message: string;
   subject: string;
+  shopEmail: string;
 };
 
 export async function POST(req: NextRequest) {
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
   try {
     const { data, error } = await resend.emails.send({
       from: `${body.firstName} <${FROM_EMAIL}>`,
-      to: [TO_EMAIL],
+      to: [body.shopEmail],
       subject: `${body.subject}`,
       react: EmailTemplate({
         firstName: body.firstName,

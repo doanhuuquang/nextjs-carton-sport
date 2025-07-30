@@ -12,11 +12,13 @@ import {
   POST_QUERY,
   RECOMMEND_POST_QUERY,
   SEARCH_QUERY,
+  SHOP_INFO_QUERY,
   SOCIAL_MEDIA_QUERY,
 } from "./sanity-queries";
 import { Category } from "@/types/category";
 import { SocialMedia } from "@/types/social-media";
 import { BlogOwnerInfo } from "@/types/blog-owner-info";
+import { ShopInfo } from "@/types/shop-info";
 
 const { projectId, dataset } = client.config();
 const urlFor = (source: SanityImageSource) =>
@@ -69,7 +71,17 @@ export function transformBlogOwnerInfo(doc: SanityDocument): BlogOwnerInfo {
   };
 }
 
-///////////////////////////////////////////////////////////////////////////////////
+export function transformShopInfo(doc: SanityDocument): ShopInfo {
+  return {
+    logo: doc.logo ? urlFor(doc.logo)?.url() || "" : "",
+    logoDark: doc.logoDark ? urlFor(doc.logoDark)?.url() || "" : "",
+    name: doc.name || "",
+    email: doc.email || "",
+    address: doc.address || "",
+    phone: doc.phone || "",
+    introduction: doc.introduction || "",
+  };
+}
 
 export async function getPosts(): Promise<Post[]> {
   const sanityPosts: SanityDocument[] = await client.fetch(
@@ -190,6 +202,17 @@ export async function getBlogOwnerInfo(): Promise<BlogOwnerInfo> {
     }
   );
   return transformBlogOwnerInfo(blogOwnerInfoSanity);
+}
+
+export async function getShopInfo(): Promise<ShopInfo> {
+  const shopInfoSanity: SanityDocument = await client.fetch(
+    SHOP_INFO_QUERY,
+    {},
+    {
+      next: { revalidate: 30 },
+    }
+  );
+  return transformShopInfo(shopInfoSanity);
 }
 
 export async function getSocialMedias(): Promise<SocialMedia[]> {

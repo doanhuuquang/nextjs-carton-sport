@@ -82,7 +82,7 @@ function NotificationDialog({
   );
 }
 
-export default function ContactForm() {
+export default function ContactForm({ shopEmail }: { shopEmail: string }) {
   const [open, setOpen] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
@@ -102,7 +102,7 @@ export default function ContactForm() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
 
-    fetch("/api/send", {
+    fetch("/api/send-email-contact", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -114,6 +114,7 @@ export default function ContactForm() {
         phone: values.phone,
         message: values.message,
         subject: values.subject,
+        shopEmail: shopEmail,
       }),
     })
       .then((response) => response.json())

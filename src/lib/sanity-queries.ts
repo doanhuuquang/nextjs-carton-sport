@@ -110,6 +110,20 @@ export const BLOG_OWNER_INFO_QUERY = groq`
   }
 `;
 
+export const SHOP_INFO_QUERY = groq`
+  *[
+    _type == "shopInfo"
+][0]{
+    logo,
+    logoDark,
+    name,
+    email,
+    address,
+    phone,
+    introduction,
+  }
+`;
+
 export const SOCIAL_MEDIA_QUERY = groq`
   *[
     _type == "socialMedia"
