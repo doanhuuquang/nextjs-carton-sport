@@ -3,7 +3,7 @@ import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import SubscribeForm from "@/components/shared/subscribe-form";
 import { getPostCategories } from "@/lib/sanity-utils";
-import { Category } from "@/types/postCategory";
+import { PostCategory } from "@/types/postCategory";
 import SocialLinks from "@/components/shared/social-links";
 
 export const navLinks = [
@@ -15,7 +15,7 @@ export const navLinks = [
 ];
 
 export default async function AppFooter() {
-  const categories: Category[] = await getPostCategories();
+  const categories: PostCategory[] = await getPostCategories();
 
   return (
     <div className="w-full bg-background border-t">
