@@ -36,32 +36,36 @@ export default function PostsPage() {
   }, []);
 
   return (
-    <main className="space-y-5 py-5 w-full h-full">
-      <div className="flex gap-3 overflow-auto max-w-7xl h-full mx-auto px-3 hide-scrollbar">
-        {loading ? (
-          <>
-            <Skeleton className="h-[50px] w-full rounded-sm" />
-            <Skeleton className="h-[50px] w-full rounded-sm" />
-            <Skeleton className="h-[50px] w-full rounded-sm" />
-            <Skeleton className="h-[50px] w-full rounded-sm" />
-            <Skeleton className="h-[50px] w-full rounded-sm" />
-          </>
-        ) : (
-          categories.map((category) => (
-            <Button
-              variant={
-                currentCategory === category.name ? "default" : "outline"
-              }
-              key={category.name}
-              onClick={() => setCurrentCategory(category.name)}
-            >
-              {category.name}
-            </Button>
-          ))
-        )}
+    <main className="w-full h-full">
+      <div className=" w-full sticky top-20 z-20 py-5 backdrop-blur-[100px]">
+        <div className="absolute top-0 right-0 h-full w-3 bg-gradient-to-l from-background to-transparent"></div>
+        <div className="absolute top-0 left-0 h-full w-3 bg-gradient-to-r from-background to-transparent"></div>
+        <div className="flex gap-5 overflow-auto max-w-7xl  mx-auto px-3 hide-scrollbar">
+          {loading ? (
+            <>
+              <Skeleton className="h-[50px] w-full rounded-sm" />
+              <Skeleton className="h-[50px] w-full rounded-sm" />
+              <Skeleton className="h-[50px] w-full rounded-sm" />
+              <Skeleton className="h-[50px] w-full rounded-sm" />
+              <Skeleton className="h-[50px] w-full rounded-sm" />
+            </>
+          ) : (
+            categories.map((category) => (
+              <Button
+                variant={
+                  currentCategory === category.name ? "default" : "outline"
+                }
+                key={category.name}
+                onClick={() => setCurrentCategory(category.name)}
+              >
+                {category.name}
+              </Button>
+            ))
+          )}
+        </div>
       </div>
 
-      <div className="w-full px-3 max-w-7xl mx-auto grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 grid-flow-row gap-5">
+      <div className="w-full px-3 max-w-7xl mx-auto grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 grid-flow-row gap-5">
         {loading ? (
           <>
             <PostCardSkeleton />
@@ -85,7 +89,7 @@ export default function PostsPage() {
           )
         )}
       </div>
-      <div className="flex justify-center items-center w-full gap-1">
+      <div className="flex justify-center items-center w-full gap-1 mt-20">
         <div className="h-[1px] w-3 bg-muted-foreground/30"></div>
         <p className="text-muted-foreground/30 text-sm">Đã xem hết</p>
         <div className="h-[1px] w-3 bg-muted-foreground/30"></div>

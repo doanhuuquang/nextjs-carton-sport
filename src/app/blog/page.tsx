@@ -22,7 +22,7 @@ export default async function BlogPage() {
   return (
     <main className="max-w-7xl px-3 py-5 space-y-15 mx-auto">
       <div className="space-y-5">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           {compactPosts.map((post) => (
             <PostCardCompact key={post.slug} post={post} />
           ))}
@@ -32,7 +32,7 @@ export default async function BlogPage() {
 
       <div className="space-y-5">
         <h2 className="text-2xl font-bold">Bài viết nổi bật</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
           {posts.map((post) => (
             <PostCard key={post.slug} post={post} />
           ))}
@@ -41,14 +41,14 @@ export default async function BlogPage() {
 
       <div className="space-y-5">
         <h2 className="text-2xl font-bold">Đề xuất</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 md:gap-3 lg:gap-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5">
           {(() => {
             const featuredPost = recommendPosts.pop();
             return featuredPost ? (
               <PostCardFeatured post={featuredPost} />
             ) : null;
           })()}
-          <div className="grid grid-cols-1 gap-3">
+          <div className="grid grid-cols-1 gap-5">
             {recommendPosts.map((post) => (
               <PostCard key={post.slug} post={post} direction="horizontal" />
             ))}

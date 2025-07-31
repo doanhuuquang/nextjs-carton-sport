@@ -17,12 +17,15 @@ import { appNavLinks } from "@/components/shared/app-nav";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import AppLogo from "@/components/shared/app-logo";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 export function AppMenuMobile() {
+  const [open, setOpen] = React.useState(false);
   const pathName = usePathname();
 
   return (
-    <Drawer>
+    <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <Menu className="size-5" />
       </DrawerTrigger>
@@ -37,16 +40,18 @@ export function AppMenuMobile() {
             </DrawerDescription>
           </DrawerHeader>
           <div className="p-4 space-y-4">
-            <div className="flex flex-col items-center justify-center gap-3">
+            <div className="flex flex-col items-center justify-center gap-5">
               {appNavLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={
+                  onClick={() => open === true && setOpen(false)}
+                  className={cn(
+                    "font-semibold text-lg",
                     link.href === pathName
                       ? "text-primary"
                       : "text-muted-foreground hover:text-primary ease-in-out duration-300"
-                  }
+                  )}
                 >
                   {link.name}
                 </Link>
@@ -54,7 +59,10 @@ export function AppMenuMobile() {
             </div>
           </div>
           <DrawerFooter>
-            <div className="flex justify-center items-center">
+            <div className="flex justify-between items-center">
+              <Link href={"/shop/account"}>
+                <Button variant={"outline"}>Đăng nhập</Button>
+              </Link>
               <ModeSwitch />
             </div>
           </DrawerFooter>
