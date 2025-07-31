@@ -20,7 +20,7 @@ function PostCard({
     <Link
       href={`/blog/posts/${post.slug}`}
       className={cn(
-        " group overflow-hidden border grid gap-3 h-full w-full rounded-sm hover:bg-accent transition-all duration-300",
+        " group overflow-hidden grid gap-3 h-full w-full rounded-sm ",
         className,
         direction === "horizontal" ? "grid-cols-2 grid-rows-1" : ""
       )}
@@ -52,7 +52,7 @@ function PostCard({
         </div>
       </div>
 
-      <div className="flex-1 h-full p-2 space-y-2">
+      <div className="flex-1 h-full space-y-2">
         <div className="flex items-center gap-2 text-[10px] uppercase">
           <p className="line-clamp-1">{post.publishedAt.substring(0, 10)}</p>
           <span className="w-[1px] h-[11px] bg-muted-foreground rotate-30"></span>
@@ -77,7 +77,7 @@ function PostCardCompact({ className, post }: PostCardProps) {
     <Link
       href={`/blog/posts/${post.slug}`}
       className={cn(
-        "group overflow-hidden border grid grid-cols-3 h-full items-center gap-3 w-full rounded-sm hover:bg-accent transition-all duration-300 ",
+        "group overflow-hidden grid grid-cols-3 h-full items-center gap-3 w-full rounded-sm  ",
         className
       )}
     >
@@ -89,7 +89,7 @@ function PostCardCompact({ className, post }: PostCardProps) {
           className="object-cover"
         />
       </div>
-      <div className="col-span-2 space-y-1 p-2 h-full">
+      <div className="col-span-2 space-y-1 h-full">
         <div className="flex items-center gap-2 text-muted-foreground text-[11px] uppercase">
           <p className="line-clamp-1">{post.publishedAt.substring(0, 10)}</p>
           <span className="w-[1px] h-[10px] bg-muted-foreground rotate-30"></span>
@@ -110,7 +110,7 @@ function PostCardFeatured({
     <Link
       href={`/blog/posts/${post.slug}`}
       className={cn(
-        "group overflow-hidden border grid gap-3 h-full min-h-[250px] w-full rounded-sm hover:bg-accent transition-all duration-300",
+        "group overflow-hidden grid gap-3 h-full min-h-[250px] w-full rounded-sm ",
         className,
         isCarouselItem ? "relative" : "grid-rows-2"
       )}
@@ -159,7 +159,7 @@ function PostCardFeatured({
       </div>
       <div
         className={cn(
-          "flex-1 space-y-5 lg:p-4 p-2",
+          "flex-1 space-y-5",
           isCarouselItem &&
             "absolute w-full lg:max-w-1/2 bottom-0 left-0 bg-gradient-to-t text-white"
         )}
@@ -210,11 +210,11 @@ function PostCardMinimal({ post, className }: PostCardProps) {
     <Link
       href={`/blog/posts/${post.slug}`}
       className={cn(
-        "group overflow-hidden border grid gap-3 h-full w-full rounded-sm hover:bg-accent transition-all duration-300",
+        "group overflow-hidden grid gap-3 h-full w-full rounded-sm ",
         className
       )}
     >
-      <div className="flex-1 h-full p-3 space-y-2">
+      <div className="flex-1 h-full space-y-2">
         <div className="flex items-center gap-2 text-[10px] uppercase">
           <p className="line-clamp-1">{post.publishedAt.substring(0, 10)}</p>
           <span className="w-[1px] h-[11px] bg-muted-foreground rotate-30"></span>

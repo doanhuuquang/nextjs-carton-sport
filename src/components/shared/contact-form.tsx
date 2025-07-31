@@ -141,12 +141,12 @@ export default function ContactForm({ shopEmail }: { shopEmail: string }) {
         onSubmit={form.handleSubmit(onSubmit)}
         className="col-span-4 lg:space-y-10 space-y-5"
       >
-        <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 lg:gap-10 gap-5">
+        <div className="flex lg:gap-10 gap-5 w-full">
           <FormField
             control={form.control}
             name="lastName"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="grow">
                 <FormLabel>Họ</FormLabel>
                 <FormControl>
                   <Input
@@ -163,7 +163,7 @@ export default function ContactForm({ shopEmail }: { shopEmail: string }) {
             control={form.control}
             name="firstName"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="grow">
                 <FormLabel>Tên</FormLabel>
                 <FormControl>
                   <Input
@@ -176,6 +176,8 @@ export default function ContactForm({ shopEmail }: { shopEmail: string }) {
               </FormItem>
             )}
           />
+        </div>
+        <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 lg:gap-10 gap-5">
           <FormField
             control={form.control}
             name="email"

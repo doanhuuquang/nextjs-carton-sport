@@ -89,7 +89,7 @@ export default async function PostPage({
                 <PostCardMinimal
                   key={relatePost.slug}
                   post={relatePost}
-                  className="bg-accent"
+                  className="bg-accent p-2"
                 />
               ))}
             </div>
@@ -99,7 +99,7 @@ export default async function PostPage({
       {/* /////////////////////////////////////////////////////////////////////////////////////////////////////// */}
       <div className="space-y-5 mt-10">
         <p className="text-2xl font-semibold">Bài viết mới nhất</p>
-        <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-3">
+        <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5">
           {relatestPosts.slice(0, 4).map((relatePost) => (
             <PostCard key={relatePost.slug} post={relatePost} />
           ))}
