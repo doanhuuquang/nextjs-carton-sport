@@ -64,7 +64,7 @@ export function AppSearch() {
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        <Search className="size-5 hover:cursor-pointer" />
+        <Search className="size-6 hover:cursor-pointer" />
       </DrawerTrigger>
       <DrawerContent>
         <div className=" mx-auto w-full h-[75vh] max-w-lg flex flex-col">

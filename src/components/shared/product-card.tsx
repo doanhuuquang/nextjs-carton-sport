@@ -1,3 +1,4 @@
+import convertMoney from "@/lib/convert-money";
 import { cn } from "@/lib/utils";
 import { Product } from "@/types/product";
 import Image from "next/image";
@@ -19,7 +20,7 @@ export default function ProductCard({ className, product }: ProductCardProps) {
       </div>
       <p className="text-xs text-gray-500">{product.productCategory.name}</p>
       <p className="font-semibold line-clamp-2 min-h-10">{product.name}</p>
-      <p className="font-light">{product.price} VND</p>
+      <p className="font-light">{convertMoney(product.price)}</p>
     </Link>
   );
 }

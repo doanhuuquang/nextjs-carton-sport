@@ -170,3 +170,9 @@
 .show-topbar-label {
   animation: showTopbarLabel 0.3s ease-out forwards;
 }
+
+.disable button,
+.disable input {
+  pointer-events: none;
+  opacity: 0.5;
+}

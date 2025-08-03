@@ -203,6 +203,7 @@ export default function ContactForm({ shopEmail }: { shopEmail: string }) {
                 <FormLabel>Số điện thoại</FormLabel>
                 <FormControl>
                   <Input
+                    type="number"
                     placeholder="Số điện thoại liên hệ"
                     {...field}
                     className={inputClassName}

@@ -89,7 +89,7 @@ export default function PostsPage() {
           )
         )}
       </div>
-      <div className="flex justify-center items-center w-full gap-1 mt-20">
+      <div className="flex justify-center items-center w-full gap-1 py-20">
         <div className="h-[1px] w-3 bg-muted-foreground/30"></div>
         <p className="text-muted-foreground/30 text-sm">Đã xem hết</p>
         <div className="h-[1px] w-3 bg-muted-foreground/30"></div>

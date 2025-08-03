@@ -43,7 +43,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AppHeader />
-          <main className="min-h-[calc(100vh-128px)]">{children}</main>
+          <main className="min-h-[calc(100vh-128px)] pb-10">{children}</main>
           <AppFooter />
         </ThemeProvider>
       </body>

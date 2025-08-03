@@ -147,7 +147,7 @@ function PostCardFeatured({
         </div>
         <div
           className={cn(
-            "absolute rounded-full bg-black/20 backdrop-blur-lg  text-white  flex items-center gap-1",
+            "absolute rounded-full bg-black/30 backdrop-blur-lg  text-white  flex items-center gap-1",
             isCarouselItem
               ? " lg:text-xs text-[8px] lg:py-2 lg:px-4 py-1 px-2 lg:top-4 top-2 lg:right-4 right-2"
               : " text-[8px] py-1 px-2 top-2 right-2"
@@ -161,7 +161,7 @@ function PostCardFeatured({
         className={cn(
           "flex-1 space-y-5",
           isCarouselItem &&
-            "absolute w-full lg:max-w-1/2 bottom-0 left-0 bg-gradient-to-t text-white"
+            "absolute w-full lg:max-w-1/2 bottom-0 left-0 bg-gradient-to-t text-white p-3"
         )}
       >
         <div className="flex items-center justify-between flex-wrap gap-2">

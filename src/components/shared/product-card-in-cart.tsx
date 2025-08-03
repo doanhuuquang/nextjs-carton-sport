@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import convertMoney from "@/lib/convert-money";
 import { cn } from "@/lib/utils";
 import { ProductDAO } from "@/types/DAOs/productDAO";
 import { Minus, Plus } from "lucide-react";
@@ -53,13 +54,14 @@ export default function ProductCardInCart({
                 </p>
               )}
             </div>
-            <p className="text-sm">{productDAO.price} VND</p>
+            <p className="text-sm">{convertMoney(productDAO.price)}</p>
           </div>
         </Link>
 
         <div className="flex justify-between items-end lg:mt-0 mt-3">
           <div className="flex items-center border-y h-7 overflow-hidden bg-accent">
             <Button
+              disabled={currentQuantity <= 1}
               variant={"outline"}
               className="!p-1"
               onClick={() =>

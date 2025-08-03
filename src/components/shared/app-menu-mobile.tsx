@@ -19,15 +19,18 @@ import Link from "next/link";
 import AppLogo from "@/components/shared/app-logo";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
+import UserAccount from "@/components/shared/user-account";
 
 export function AppMenuMobile() {
   const [open, setOpen] = React.useState(false);
   const pathName = usePathname();
+  const { isAuthenticated, isLoading } = useAuth();
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Menu className="size-5" />
+        <Menu className="size-6" />
       </DrawerTrigger>
       <DrawerContent>
         <div className="mx-auto w-full max-w-sm space-y-5">
@@ -60,9 +63,7 @@ export function AppMenuMobile() {
           </div>
           <DrawerFooter>
             <div className="flex justify-between items-center">
-              <Link href={"/shop/account"}>
-                <Button variant={"outline"}>Đăng nhập</Button>
-              </Link>
+              <UserAccount />
               <ModeSwitch />
             </div>
           </DrawerFooter>

@@ -20,7 +20,7 @@ export default async function AppCart() {
   return (
     <Sheet>
       <SheetTrigger>
-        <ShoppingBag className="size-5 hover:cursor-pointer" />
+        <ShoppingBag className="size-6 hover:cursor-pointer" />
       </SheetTrigger>
       <SheetContent className="w-[100vw] max-w-xl">
         <SheetHeader className="border-b">
