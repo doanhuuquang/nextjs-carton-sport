@@ -67,7 +67,7 @@ export default async function PostPage({
               alt={post.title}
               fill
               className="object-cover rounded-md"
-            />{" "}
+            />
           </div>
         </div>
         <div className="grid lg:grid-cols-7 gap-10">

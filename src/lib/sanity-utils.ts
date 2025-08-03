@@ -17,6 +17,7 @@ import {
   SHOP_INFO_QUERY,
   SOCIAL_MEDIA_QUERY,
   PRODUCT_CATEGORY_QUERY,
+  PRODUCT_QUERY,
 } from "./sanity-queries";
 import { PostCategory } from "@/types/postCategory";
 import { SocialMedia } from "@/types/social-media";
@@ -267,4 +268,15 @@ export async function getProducts(): Promise<Product[]> {
     }
   );
   return sanityProducts.map(transformProduct);
+}
+
+export async function getProduct(slug: string): Promise<Product> {
+  const sanityProduct: SanityDocument = await client.fetch(
+    PRODUCT_QUERY,
+    {
+      slug,
+    },
+    { next: { revalidate: 30 } }
+  );
+  return transformProduct(sanityProduct);
 }

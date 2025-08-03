@@ -172,7 +172,7 @@ export const PRODUCTS_QUERY = groq`
 export const PRODUCT_QUERY = groq`
   *[
     _type == "product"
-    && slug == $slug
+    && slug.current == $slug
   ][0]{
     ${PRODUCT_FIELDS}
   }

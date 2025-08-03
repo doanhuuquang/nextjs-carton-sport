@@ -73,7 +73,7 @@ export default function ProductCardInCart({
 
             <Input
               type="number"
-              className="w-8"
+              className="w-10 text-center"
               value={currentQuantity}
               disabled
             />
@@ -86,6 +86,7 @@ export default function ProductCardInCart({
               <Plus className="size-3" />
             </Button>
           </div>
+
           <Button variant={"ghost"}>Xóa</Button>
         </div>
       </div>
