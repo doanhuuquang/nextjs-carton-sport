@@ -1,19 +1,25 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import convertMoney from "@/lib/convert-money";
-import { cn } from "@/lib/utils";
 import { Product } from "@/types/product";
 import {
   ArrowLeft,
   ArrowRight,
   ChevronLeft,
   ChevronRight,
-  Minus,
-  Plus,
+  LoaderCircle,
 } from "lucide-react";
-import { set } from "mongoose";
 import { PortableText } from "next-sanity";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
@@ -77,7 +83,12 @@ export default function ProductPage({
   }, [params]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="text-center p-5 flex items-center gap-3 w-fit mx-auto">
+        <LoaderCircle className="size-4 animate-spin" />
+        <p className="text-muted-foreground">Đang tải...</p>
+      </div>
+    );
   }
 
   if (!success || !product) {
@@ -111,7 +122,7 @@ export default function ProductPage({
               </div>
 
               <div className="flex items-center gap-3 text-sm">
-                <p className="text-muted-foreground">Kích cỡ:</p>
+                <p className="text-muted-foreground flex">Kích cỡ:</p>
                 {product.productSize.sizes.map((size, index) => (
                   <Button
                     className="rounded-full"
@@ -138,6 +149,8 @@ export default function ProductPage({
                   </Button>
                 ))}
               </div>
+
+              <ProductSizeGuide product={product} />
             </div>
 
             <div className="flex gap-5">
@@ -170,6 +183,7 @@ export default function ProductPage({
                 Thêm vào giỏ hàng
               </Button>
             </div>
+            
             <div className="prose prose-p:text-foreground/80 prose-headings:text-foreground prose-strong:text-foreground mx-auto lg:col-span-4 col-span-7 lg:order-2 order-first">
               {Array.isArray(product.description) && (
                 <PortableText value={product.description} />
@@ -184,7 +198,7 @@ export default function ProductPage({
 
 function ProductImages({ product }: { product: Product }) {
   const [currentImageIndex, setCurrentImageIndex] = React.useState<number>(0);
-  const images: string[] = product.images.concat(product.productSize.sizeGuide);
+  const images: string[] = product.images;
 
   return (
     <div className="w-full">
@@ -245,5 +259,38 @@ function ProductImages({ product }: { product: Product }) {
         })}
       </div>
     </div>
+  );
+}
+
+function ProductSizeGuide({ product }: { product: Product }) {
+  return (
+    <Dialog>
+      <form>
+        <DialogTrigger asChild>
+          <p className="text-muted-foreground text-xs mt-5 cursor-pointer underline underline-offset-1">
+            Hướng dẫn chọn size
+          </p>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Hướng dẫn chọn size</DialogTitle>
+          </DialogHeader>
+          <div className="grid gap-4">
+            <Image
+              src={product.productSize.sizeGuide[0]}
+              alt="Size Guide"
+              width={400}
+              height={400}
+              className="rounded-lg"
+            />
+          </div>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline">Đóng</Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </form>
+    </Dialog>
   );
 }

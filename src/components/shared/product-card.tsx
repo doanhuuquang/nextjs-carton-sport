@@ -15,7 +15,7 @@ export default function ProductCard({ className, product }: ProductCardProps) {
       href={`/products/${product.slug}`}
       className={cn("w-full h-full space-y-3 cursor-pointer", className)}
     >
-      <div className="relative w-full aspect-square object-cover">
+      <div className="relative w-full aspect-square object-cover  rounded-sm overflow-hidden">
         <Image src={product.images[0]} alt={product.name} fill />
       </div>
       <p className="text-xs text-gray-500">{product.productCategory.name}</p>

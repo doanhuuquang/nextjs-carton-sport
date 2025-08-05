@@ -2,9 +2,10 @@ import AppLogo from "@/components/shared/app-logo";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import SubscribeForm from "@/components/shared/subscribe-form";
-import { getPostCategories } from "@/lib/sanity-utils";
+import { getPostCategories, getShopInfo } from "@/lib/sanity-utils";
 import { PostCategory } from "@/types/postCategory";
 import SocialLinks from "@/components/shared/social-links";
+import { ShopInfo } from "@/types/shop-info";
 
 export const navLinks = [
   { name: "Trang chủ", href: "/" },
@@ -16,6 +17,7 @@ export const navLinks = [
 
 export default async function AppFooter() {
   const categories: PostCategory[] = await getPostCategories();
+  const shopInfo: ShopInfo = await getShopInfo();
 
   return (
     <div className="w-ful bg-background border-t">
@@ -23,9 +25,7 @@ export default async function AppFooter() {
         <div className="space-y-5 px-3 py-5">
           <AppLogo className="w-40" />
           <p className="text-sm text-muted-foreground">
-            Viết là cách mình hiểu thế giới, còn đọc là cách bạn lắng nghe tâm
-            hồn. Chào mừng bạn đến với góc nhỏ của mình – nơi những câu chuyện
-            bắt đầu.
+            {shopInfo.introduction}
           </p>
           <SocialLinks />
         </div>
@@ -77,7 +77,7 @@ export default async function AppFooter() {
       <Separator orientation="horizontal" />
 
       <div className="w-full max-w-7xl mx-auto px-3 py-5 flex flex-wrap items-center justify-between text-muted-foreground text-xs gap-2">
-        <p>Copyright © 2025. Toàn bộ bản quyền thuộc Quang Blog</p>
+        <p>Copyright © 2025. Toàn bộ bản quyền thuộc Carton Sport</p>
         <div className="flex items-center gap-2">
           <Link href={"/"}>Điều khoản dịch vụ</Link>
           <div className="w-[1px] h-3 bg-muted-foreground"></div>

@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import convertMoney from "@/lib/convert-money";
 import { cn } from "@/lib/utils";
 import { ProductDAO } from "@/types/DAOs/productDAO";
-import { Minus, Plus } from "lucide-react";
+import { ChevronLeft, ChevronRight, Minus, Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -23,7 +23,7 @@ export default function ProductCardInCart({
 
   return (
     <div className={cn("w-full grid grid-cols-4 gap-3", className)}>
-      <div className="relative col-span-1 aspect-square object-cover">
+      <div className="relative col-span-1 aspect-square object-cover  rounded-sm overflow-hidden">
         <Image src={productDAO.image} alt={productDAO.name} fill />
       </div>
       <div className="w-full col-span-3 flex flex-col justify-between">
@@ -59,31 +59,29 @@ export default function ProductCardInCart({
         </Link>
 
         <div className="flex justify-between items-end lg:mt-0 mt-3">
-          <div className="flex items-center border-y h-7 overflow-hidden bg-accent">
+          <div className="flex items-center rounded-full overflow-hidden border">
             <Button
               disabled={currentQuantity <= 1}
-              variant={"outline"}
-              className="!p-1"
+              variant={"ghost"}
+              className="hover:bg-transparent"
               onClick={() =>
                 currentQuantity > 1 && setQuantity(currentQuantity - 1)
               }
             >
-              <Minus className="size-3" />
+              <ChevronLeft className="size-4" />
             </Button>
-
             <Input
               type="number"
-              className="w-10 text-center"
+              className="w-10 text-center bg-transparent"
               value={currentQuantity}
               disabled
             />
-
             <Button
-              variant={"outline"}
-              className="!p-1"
+              variant={"ghost"}
+              className="hover:bg-transparent"
               onClick={() => setQuantity(currentQuantity + 1)}
             >
-              <Plus className="size-3" />
+              <ChevronRight className="size-4" />
             </Button>
           </div>
 
